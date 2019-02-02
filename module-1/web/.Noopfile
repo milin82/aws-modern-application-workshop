@@ -1,0 +1,8 @@
+COMPONENT web
+ROUTE -m GET *
+FROM node:alpine
+COPY package.json package.json
+RUN npm install
+COPY ./ ./
+EXPOSE 8080
+SERVICE node server.js
