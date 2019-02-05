@@ -1,0 +1,4 @@
+mythicalApi.AWS_DEFAULT_REGION=local
+mythicalApi.region_name=local
+mythicalApi.AWS_REGION=local
+mythicalApi.region=local

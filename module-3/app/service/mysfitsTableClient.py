@@ -3,11 +3,12 @@ import json
 import logging
 from collections import defaultdict
 import argparse
+import os
 
 # create a DynamoDB client using boto3. The boto3 library will automatically
 # use the credentials associated with our ECS task role to communicate with
 # DynamoDB, so no credentials need to be stored/managed at all by our code!
-client = boto3.client('dynamodb')
+client = boto3.client('dynamodb', region_name='local', endpoint_url=os.environ.get('MYSFITSTABLE_ENDPOINT'))
 
 def getMysfitsJson(items):
     # loop through the returned mysfits and add their attributes to a new dict
@@ -45,7 +46,7 @@ def getAllMysfits():
     # Mysfits API is low traffic and the table is very small, the scan operation
     # will suit our needs for this workshop.
     response = client.scan(
-        TableName='MysfitsTable'
+        TableName=os.environ.get('MYSFITSTABLE_TABLE')
     )
 
     logging.info(response["Items"])
@@ -60,7 +61,7 @@ def queryMysfitItems(filter, value):
     # Use the DynamoDB API Query to retrieve mysfits from the table that are
     # equal to the selected filter values.
     response = client.query(
-        TableName='MysfitsTable',
+        TableName=os.environ.get('MYSFITSTABLE_TABLE'),
         IndexName=filter+'Index',
         KeyConditions={
             filter: {
