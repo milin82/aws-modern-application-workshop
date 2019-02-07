@@ -9,6 +9,6 @@ app.get('/', (req, res) => {
   });
 });
 
-const server = app.listen(8080, () => {
+const server = app.listen(80, () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });
